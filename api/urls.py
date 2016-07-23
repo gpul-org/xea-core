@@ -1,4 +1,4 @@
-"""api_v0 URL Configuration
+"""api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -16,5 +16,5 @@ Including another URLconf
 from django.conf.urls import url
 
 urlpatterns = [
-    ## We don't yet have any routes
+        ## We don't yet have any routes
 ]

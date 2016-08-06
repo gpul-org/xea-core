@@ -1,0 +1,21 @@
+# This is the official list of people who can contribute
+# (and typically have contributed) code to the XEA-core repository.
+#
+# The submission process checks to make sure that people submitting
+# code are listed in this file (by email address).
+#
+# Names should be added to this file only after verifying that
+# the individual or the individual's organization has agreed to
+# the appropriate Contributor License Agreement, found here:
+#
+#     https://gitlab.com/gpul/cla/
+#
+# Names should be added to this file like so:
+#     Individual's name <submission email address>
+#     Individual's name <submission email address> <email2> <emailN>
+#
+# An entry with multiple email addresses specifies that the
+# first address should be used in the submit logs and
+# that the other addresses should be recognized as the
+# same person when interacting with the repository.
+# Please keep the list sorted.

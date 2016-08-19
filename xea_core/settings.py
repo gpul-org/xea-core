@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'debug_toolbar',
     'rest_framework',
+    'rest_framework_swagger',
     'knox',
     'jwt_knox',
     'api',
@@ -154,6 +155,27 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
+}
+
+
+# Swagger settings
+SWAGGER_SETTINGS = {
+    'APIS_SORTER': True,
+    'DOC_EXPANSION': 'list',
+    'JSON_EDITOR': True,
+    'OPERATIONS_SORTER': 'method',
+    'SHOW_REQUEST_HEADERS': True,
+
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic',
+        },
+        'jwt': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        },
+    },
 }
 
 

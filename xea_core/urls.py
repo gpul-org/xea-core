@@ -19,7 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'api/auth/jwt/', include('jwt_knox.urls', namespace='jwt_knox')),
-
     url(r'^api/', include('api.urls')),
 ]

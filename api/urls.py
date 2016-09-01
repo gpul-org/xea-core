@@ -14,7 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from rest_framework import routers
+from rest_framework.urlpatterns import include
+from jwt_knox.viewsets import JWTKnoxAPIViewSet
+
+router = routers.SimpleRouter(trailing_slash=False)
+router.register(r'auth/jwt', JWTKnoxAPIViewSet, base_name='jwt_knox')
 
 urlpatterns = [
-        ## We don't yet have any routes
+    url(r'', include(router.urls)),
 ]

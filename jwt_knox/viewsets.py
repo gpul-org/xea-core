@@ -8,6 +8,9 @@ from jwt_knox.auth import JSONWebTokenKnoxAuthentication
 from jwt_knox.settings import api_settings
 from jwt_knox.utils import create_auth_token
 
+from api.schemas import returns
+
+
 response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 
 class PerViewAuthenticatorMixin(object):
@@ -59,6 +62,7 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
         if view_name == 'get_token':
             return api_settings.JWT_LOGIN_AUTHENTICATION_CLASSES
 
+    @returns("Ok", status=status.HTTP_200_OK)
     @list_route(methods=['post', ])
     def get_token(self, request, expires=None):
         """

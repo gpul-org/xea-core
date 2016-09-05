@@ -45,7 +45,12 @@ class PerViewAuthenticatorMixin(object):
 
 
 
-@responds('Credentials invalid or not provided', status=status.HTTP_401_UNAUTHORIZED)
+@responds('Credentials invalid or not provided',
+          status=status.HTTP_401_UNAUTHORIZED,
+          schema=responds.schemas.obj('error', properties=[
+              responds.props('details', responds.schemas.string()),
+          ])
+)
 class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
     """This API endpoint set enables authentication via **JSON Web Tokens** (JWT).
 

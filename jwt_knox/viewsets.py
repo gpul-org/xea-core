@@ -66,8 +66,13 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
 
 
     @responds_desired(204, meaning='Token generated successfully',
-              schema={'token': 'string'},
-              schema_name='jwt-token',
+                      schema={'token': 'string'},
+                      schema_name='jwt-token',
+    )
+    @responds_desired(401, meaning='Authentication credentials not provided',
+                      ## ? meaning not required; ":" to separate arguments to our syntax
+                      schema={'details:?': 'string'},
+                      schema_name='error',
     )
     @responds('Token generated successfully',
               status=status.HTTP_200_OK,

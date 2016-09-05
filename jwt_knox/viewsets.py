@@ -8,7 +8,7 @@ from jwt_knox.auth import JSONWebTokenKnoxAuthentication
 from jwt_knox.settings import api_settings
 from jwt_knox.utils import create_auth_token
 
-from api.schemas import returns
+from api.schemas import responds, responds_desired
 
 
 response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
@@ -44,6 +44,8 @@ class PerViewAuthenticatorMixin(object):
         pass
 
 
+
+@responds('Credentials invalid or not provided', status=status.HTTP_401_UNAUTHORIZED)
 class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
     """This API endpoint set enables authentication via **JSON Web Tokens** (JWT).
 
@@ -62,7 +64,31 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
         if view_name == 'get_token':
             return api_settings.JWT_LOGIN_AUTHENTICATION_CLASSES
 
-    @returns("Ok", status=status.HTTP_200_OK)
+
+    @responds_desired(204, meaning='Token generated successfully',
+              schema={'token': 'string'},
+              schema_name='jwt-token',
+    )
+    @responds('Token generated successfully',
+              status=status.HTTP_200_OK,
+              schema=responds.schemas.obj(
+                  title='jwt-token',
+                  properties=[
+                      responds.props('token', responds.schemas.string())
+                  ]),
+              examples={
+                  'application/json': {'token': 'Bearer saodfijoi...asfdoij'},
+              },
+    )
+    @responds("Authorization credentials not provided",
+              status=status.HTTP_401_UNAUTHORIZED,
+              schema=responds.schemas.obj(
+                  title='error',
+                  properties=[
+                      responds.props('detail', responds.schemas.string())
+                  ],
+              )
+    )
     @list_route(methods=['post', ])
     def get_token(self, request, expires=None):
         """
@@ -74,6 +100,7 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
         token = create_auth_token(user=request.user, expires=expires)
         return Response(response_payload_handler(token, request.user, request))
 
+    @responds('Validation succeeded', status=status.HTTP_204_NO_CONTENT)
     @list_route(methods=('get', 'post'))
     def verify(self, request):
         """
@@ -94,6 +121,7 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
             response_payload_handler(token, request.user, request),
             status=status.HTTP_200_OK)
 
+    @responds('Token has become invalid', status=status.HTTP_204_NO_CONTENT)
     @list_route(methods=('post', ))
     def logout(self, request):
         """
@@ -103,6 +131,11 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
         request.auth[1].delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    @responds('Other tokens are now invalid',
+              schema=responds.schemas.obj('deleted_sessions', properties=[
+                  responds.props('deleted_sessions', responds.schemas.int())
+              ]),
+              examples={'application/json': {'deleted_sessions': 0}})
     @list_route(methods=('post', ))
     def logout_other(self, request):
         """
@@ -115,6 +148,7 @@ class JWTKnoxAPIViewSet(PerViewAuthenticatorMixin, ViewSet):
         num = tokens_to_delete.delete()
         return Response({"deleted_sessions": num[0]})
 
+    @responds('User has expired all their registered tokens', status=status.HTTP_204_NO_CONTENT)
     @list_route(methods=('post', ))
     def logout_all(self, request):
         """

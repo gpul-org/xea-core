@@ -3,6 +3,12 @@ from rest_framework import status
 from rest_framework.schemas import SchemaGenerator as BaseSchemaGenerator
 from rest_framework.compat import urlparse
 
+def responds_desired(*args, **kwargs):
+    """We dont know yet how to implement this.
+    """
+    def decorator(func):
+        return func
+    return decorator
 
 
 def returns(message, status=status.HTTP_200_OK):

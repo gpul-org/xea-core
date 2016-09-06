@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'knox',
     'jwt_knox',
     'api',
+    'accounts',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -140,3 +141,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email settings
+
+EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS', True)
+
+# Our site's HOST
+
+SITE_HOST = 'http://127.0.0.1:8000'

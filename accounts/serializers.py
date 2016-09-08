@@ -17,6 +17,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
         instance.save()
         return instance
 
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer()
 
@@ -48,4 +49,3 @@ class UserPasswordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('url', 'password')
-        

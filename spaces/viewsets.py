@@ -1,12 +1,11 @@
-
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
+from api.permissions import IsPlaceOwnerOrStaff
 from .models import Place
 from .serializers import PlaceSerializer
-from accounts.permissions import IsPlaceOwnerOrStaff
 
 
 class PlaceViewSet(viewsets.ModelViewSet):

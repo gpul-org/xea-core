@@ -1,10 +1,11 @@
+import logging
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.template.loader import get_template
 from django.contrib.auth.tokens import default_token_generator
 
-
+logger = logging.getLogger(__name__)
 
 
 def send_activation_mail(user):
@@ -21,10 +22,9 @@ def send_activation_mail(user):
     subj = subj_template.render()
     msg_template = get_template('activation_mail_body_template.txt')
     msg = msg_template.render(body_context)
-    print(msg)
+    logger.info('Sending activation mail to \n' + to_email + '\n' + msg)
     send_mail(subject=subj, message=msg,
               from_email=settings.EMAIL_HOST_USER, recipient_list=[to_email], fail_silently=False)
-
 
 
 def get_token(user):

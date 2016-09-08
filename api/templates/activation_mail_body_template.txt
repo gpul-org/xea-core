@@ -1,0 +1,4 @@
+Hello {{username}}! Your account needs to be activated.
+Click on the following URL and follow the instructions to get started:
+
+{{host}}{{url}}

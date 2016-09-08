@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'jwt_knox',
     'api',
     'accounts',
+    'spaces',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -24,4 +24,5 @@ router.register(r'auth/jwt', JWTKnoxAPIViewSet, base_name='jwt_knox')
 urlpatterns = [
     url(r'', include(router.urls)),
     url(r'accounts/', include('accounts.urls')),
+    url(r'spaces/', include('spaces.urls')),
 ]

@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from accounts.tests import create_n_users
@@ -22,16 +22,13 @@ class PlacesTest(APITestCase):
     postal_code = '15005'
     region = 'Galicia'
     nation = 'Spain'
+
+    line1 = street + ' ' + civic + ' ' + floor + door
+    line2 = postal_code + ' ' + city + ', ' + nation
     main_url = reverse('place-list')
 
-    address_payload = {'street_name': street,
-                       'civic': civic,
-                       'floor': floor,
-                       'door': door,
-                       'city': city,
-                       'postal_code': postal_code,
-                       'region': region,
-                       'nation': nation
+    address_payload = {'line1': line1,
+                       'line2': line2,
                        }
 
     place_payload = {'name': name,
@@ -92,4 +89,16 @@ class PlacesTest(APITestCase):
         response = self.client.patch(path=url, data={'name': new_place_name}, format='json')
         place = Place.objects.get(pk=1)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertEqual(place.name, new_place_name)
+
+    def test_update_place_address(self):
+        self.create_n_places(self.DEFAULT_PLACES_NUMBER)
+        url = reverse('place-update-place-data', kwargs={'pk': 1})
+        place = Place.objects.get(pk=1)
+        owner = place.owner
+        self.client.force_login(owner)
+        line1 = 'newstreetname 5b'
+        address_payload = {'line1': line1}
+        response = self.client.patch(path=url, data={'address': address_payload}, format='json')
+        place = Place.objects.get(pk=1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(place.address.line1, line1)

@@ -4,11 +4,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, UserPasswordSerializer
-from .permissions import IsAdminOrSelf
+from api.permissions import IsAdminOrSelf
+from . import utils
 from .models import UserProfile
 from .serializers import UserProfileSerializer
-from . import utils
+from .serializers import UserSerializer, UserPasswordSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

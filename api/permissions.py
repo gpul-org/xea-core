@@ -13,6 +13,6 @@ class IsAdminOrSelf(permissions.BasePermission):
         return False
 
 
-class IsProfileOwnerOrStaff(IsAdminOrSelf):
+class IsPlaceOwnerOrAdmin(IsAdminOrSelf):
     def get_owner(self, obj):
         return obj.user

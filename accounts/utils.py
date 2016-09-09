@@ -1,9 +1,11 @@
 import logging
-from django.core.mail import send_mail
+
 from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.template.loader import get_template
 from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.template.loader import get_template
+from rest_framework.reverse import reverse
+
 
 logger = logging.getLogger(__name__)
 

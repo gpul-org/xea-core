@@ -326,16 +326,3 @@ class UserProfileTest(APITestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertTrue('profile' in response.data)
-
-    def test_profile_update_after_password_change(self):
-        user = get_user_model().objects.get(pk=1)
-        change_password_url = reverse('user-change-password', kwargs={'pk': user.pk})
-        profile_url = reverse('user-update-profile', kwargs={'pk': user.pk})
-        self.client.force_login(user)
-        response1 = self.client.put(path=profile_url, data=self.default_test_payload)
-        self.assertEquals(response1.status_code, status.HTTP_200_OK)
-        response2 = self.client.post(path=change_password_url, data={'password': 'password2'})
-        self.assertEqual(response2.status_code, status.HTTP_200_OK)
-        response3 = self.client.put(path=profile_url, data=self.default_test_payload)
-        self.assertEqual(response2.status_code, status.HTTP_401_UNAUTHORIZED)
-

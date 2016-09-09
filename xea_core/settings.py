@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Django CORS must be before CommonMiddlware if using USE_ETAGS=True
@@ -78,8 +78,47 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'xea_core.wsgi.application'
+LOGGING = {
+    'version': 1,
+    'disable_existing_logger': False,
+    'formatters': {
+        'color': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': '%(log_color)s%(levelname)-8s %(message)s%(reset)s',
+            'log_colors': {
+                'DEBUG': 'bold_black',
+                'INFO': 'cyan',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'bold_red,bg_white',
+            },
+            'reset': True,
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'color',
+        },
+    },
+    'loggers': {
+        'django': {
+            'formatter': 'color',
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
+}
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
+WSGI_APPLICATION = 'xea_core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

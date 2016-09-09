@@ -11,8 +11,3 @@ class IsAdminOrSelf(permissions.BasePermission):
         if request.user == self.get_owner(obj):
             return True
         return False
-
-
-class IsPlaceOwnerOrAdmin(IsAdminOrSelf):
-    def get_owner(self, obj):
-        return obj.user

@@ -16,12 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from rest_framework import routers
 from rest_framework.urlpatterns import include
+
+from .views import schema_view
 from jwt_knox.viewsets import JWTKnoxAPIViewSet
+
 
 router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'auth/jwt', JWTKnoxAPIViewSet, base_name='jwt_knox')
 
 urlpatterns = [
+    url(r'docs', schema_view, name='swagger-ui'),
     url(r'', include(router.urls)),
     url(r'accounts/', include('accounts.urls')),
 ]

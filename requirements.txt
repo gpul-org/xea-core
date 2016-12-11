@@ -8,6 +8,7 @@ django-filter==0.13.0
 django-rest-knox==2.2.0
 django-rest-swagger>=2.0.4,<2.1.0
 djangorestframework>=3.4.4,<3.5.0
+drf-swagger-extras>=0.1.0.dev1,<2.0
 idna==2.1
 PyJWT>=1.4.0,<2.0.0
 Markdown==2.6.6

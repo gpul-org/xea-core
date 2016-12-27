@@ -1,6 +1,10 @@
 XEA Core
 ========
 
+[![Build Status](https://travis-ci.org/gpul-org/xea-core.svg?branch=master)](https://travis-ci.org/gpul-org/xea-core)
+[![Requirements Status](https://requires.io/github/gpul-org/xea-core/requirements.svg?branch=master)](https://requires.io/github/gpul-org/xea-core/requirements/?branch=master)
+
+
 This is the API Backend for XEA.
 
 Usage
